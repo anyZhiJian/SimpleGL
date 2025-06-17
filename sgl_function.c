@@ -101,17 +101,17 @@ inline int sgl_clip_vline(int *x, int *y, int *len, sgl_rect_t visible)
 inline void sgl_rotated2original(int *x, int *y, int max_x, int max_y, sgl_rotate_t rotate)
 {
     int temp = *x;
-    if(rotate == sgl_rotate_90)
+    if(rotate == SGL_ROTATE_90)
     {
         *x = max_x - *y;
         *y = temp;
     }
-    else if(rotate == sgl_rotate_270)
+    else if(rotate == SGL_ROTATE_270)
     {
         *x = *y;
         *y = max_y - temp;
     }
-    else if(rotate == sgl_rotate_180)
+    else if(rotate == SGL_ROTATE_180)
     {
         *x = max_x - *x;
         *y = max_y - *y;
@@ -121,17 +121,17 @@ inline void sgl_rotated2original(int *x, int *y, int max_x, int max_y, sgl_rotat
 inline void sgl_original2rotated(int *x, int *y, int max_x, int max_y, sgl_rotate_t rotate)
 {
     int temp = *x;
-    if(rotate == sgl_rotate_90)
+    if(rotate == SGL_ROTATE_90)
     {
         *x = *y;
         *y = max_x - temp;
     }
-    else if(rotate == sgl_rotate_270)
+    else if(rotate == SGL_ROTATE_270)
     {
         *x = max_y - *y;
         *y = temp;
     }
-    else if(rotate == sgl_rotate_180)
+    else if(rotate == SGL_ROTATE_180)
     {
         *x = max_x - *x;
         *y = max_y - *y;
@@ -142,14 +142,14 @@ inline void sgl_align(int *x, int *y, int w, int h, sgl_align_t align)
 {
     switch(align)
     {
-        case sgl_align_up_left:        break;
-        case sgl_align_up_right:       *x -= w - 1;break;
-        case sgl_align_down_left:      *y -= h - 1;break;
-        case sgl_align_down_right:     *x -= w - 1;*y -= h - 1;break;
-        case sgl_align_center:         *x -= w / 2;*y -= h / 2;break;
-        case sgl_align_up_center:      *x -= w / 2;break;
-        case sgl_align_down_center:    *x -= w / 2;*y -= h - 1;break;
-        case sgl_align_left_center:    *y -= h / 2;break;
-        case sgl_align_right_center:   *x -= w - 1;*y -= h / 2;break;
+        case SGL_ALIGN_UP_LEFT:        break;
+        case SGL_ALIGN_UP_RIGHT:       *x -= w - 1;break;
+        case SGL_ALIGN_DOWN_LEFT:      *y -= h - 1;break;
+        case SGL_ALIGN_DOWN_RIGHT:     *x -= w - 1;*y -= h - 1;break;
+        case SGL_ALIGN_CENTER:         *x -= w / 2;*y -= h / 2;break;
+        case SGL_ALIGN_UP_CENTER:      *x -= w / 2;break;
+        case SGL_ALIGN_DOWN_CENTER:    *x -= w / 2;*y -= h - 1;break;
+        case SGL_ALIGN_LEFT_CENTER:    *y -= h / 2;break;
+        case SGL_ALIGN_RIGHT_CENTER:   *x -= w - 1;*y -= h / 2;break;
     }
 }

@@ -7,27 +7,27 @@ void sgl_show_mono_bitmap(sgl_t *sgl, int x, int y, int w, int h, const uint8_t 
     int offset_y = y;
     switch(dir)
     {
-        case sgl_dir_up:
+        case SGL_DIR_UP:
             for(i = 0; i < w; ++i)
                 for(j = 0; j < h; ++j)
                     if((bitmap[i + (j / 8 * w)] & (1<<(j % 8))))
                         sgl_draw_point(sgl, offset_x + i, offset_y + j, color);
             break;
-        case sgl_dir_right:
+        case SGL_DIR_RIGHT:
             offset_x = x + h - 1;
             for(i = 0; i < w; ++i)
                 for(j = 0; j < h; ++j)
                     if((bitmap[i + (j / 8 * w)] & (1<<(j % 8))))
                         sgl_draw_point(sgl, offset_x - j, offset_y + i, color);
             break;
-        case sgl_dir_left:
+        case SGL_DIR_LEFT:
             offset_y = y + w - 1;
             for(i = 0; i < w; ++i)
                 for(j = 0; j < h; ++j)
                     if((bitmap[i + (j / 8 * w)] & (1<<(j % 8))))
                         sgl_draw_point(sgl, offset_x + j, offset_y -i, color);
             break;
-        case sgl_dir_down:
+        case SGL_DIR_DOWN:
             offset_x = x + w - 1;
             offset_y = y + h - 1;
             for(i = 0; i < w; ++i)

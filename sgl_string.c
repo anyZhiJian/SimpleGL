@@ -9,23 +9,23 @@ void sgl_show_string(sgl_t *sgl, int x, int y, const char *str, int length, sgl_
     int fontheight = sgl->font_info.height;
     switch(dir)
     {
-        case sgl_dir_up:
+        case SGL_DIR_UP:
             sgl_align(&x, &y, fontwidth * length, fontheight, align);
             for(i = 0; i < length; ++i)
                 sgl_show_mono_bitmap(sgl, x + i * fontwidth, y, fontwidth, fontheight, &sgl->font_info.font[(str[i] - ' ') * sgl->font_info.fontsize], dir, color);
             break;
-        case sgl_dir_right:
+        case SGL_DIR_RIGHT:
             sgl_align(&x, &y, fontheight, fontwidth * length, align);
             for(i = 0; i < length; ++i)
                 sgl_show_mono_bitmap(sgl, x, y + i * fontwidth, fontwidth, fontheight, &sgl->font_info.font[(str[i] - ' ') * sgl->font_info.fontsize], dir, color);
             break;
-        case sgl_dir_left:
+        case SGL_DIR_LEFT:
             sgl_align(&x, &y, fontheight, fontwidth * length, align);
             y += (length - 1) * fontwidth;
             for(i = 0; i < length; ++i)
                 sgl_show_mono_bitmap(sgl, x, y - i * fontwidth, fontwidth, fontheight, &sgl->font_info.font[(str[i] - ' ') * sgl->font_info.fontsize], dir, color);
             break;
-        case sgl_dir_down:
+        case SGL_DIR_DOWN:
             sgl_align(&x, &y, fontwidth * length, fontheight, align);
             x += (length - 1) * fontwidth;
             for(i = 0; i < length; ++i)

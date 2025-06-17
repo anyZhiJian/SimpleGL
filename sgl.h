@@ -1,7 +1,7 @@
 #ifndef __SIMPLEGL_H
 #define __SIMPLEGL_H
 
-#include "stm32f10x.h"
+#include <stdint.h>
 #include "font.h"
 
 #define sgl_FORMAT_STRING_BUFFERSIZE 100
@@ -12,13 +12,13 @@
 
 typedef enum
 {
-    sgl_dir_up = 0,
-    sgl_dir_down,
-    sgl_dir_left,
-    sgl_dir_right,
+    SGL_DIR_UP = 0,
+    SGL_DIR_DOWN,
+    SGL_DIR_LEFT,
+    SGL_DIR_RIGHT,
 } sgl_dir_t;
 
-#define sgl_dir_default sgl_dir_up
+#define SGL_DIR_DEFAULT SGL_DIR_UP
 
 /**
   * alignment:
@@ -37,18 +37,18 @@ typedef enum
 
 typedef enum
 {
-    sgl_align_up_left = 0,
-    sgl_align_up_right,
-    sgl_align_down_left,
-    sgl_align_down_right,
-    sgl_align_center,
-    sgl_align_up_center,
-    sgl_align_down_center,
-    sgl_align_left_center,
-    sgl_align_right_center,
+    SGL_ALIGN_UP_LEFT = 0,
+    SGL_ALIGN_UP_RIGHT,
+    SGL_ALIGN_DOWN_LEFT,
+    SGL_ALIGN_DOWN_RIGHT,
+    SGL_ALIGN_CENTER,
+    SGL_ALIGN_UP_CENTER,
+    SGL_ALIGN_DOWN_CENTER,
+    SGL_ALIGN_LEFT_CENTER,
+    SGL_ALIGN_RIGHT_CENTER,
 } sgl_align_t;
 
-#define sgl_align_default sgl_align_up_left
+#define SGL_ALIGN_DEFAULT SGL_ALIGN_UP_LEFT
 
 /**
   * rotate shape:坐标轴固定，图像旋转
@@ -79,21 +79,21 @@ typedef enum
 
 typedef enum
 {
-    sgl_rotate_0 = 0,
-    sgl_rotate_90,
-    sgl_rotate_180,
-    sgl_rotate_270,
+    SGL_ROTATE_0 = 0,
+    SGL_ROTATE_90,
+    SGL_ROTATE_180,
+    SGL_ROTATE_270,
 } sgl_rotate_t;
 
-#define sgl_rotate_default sgl_rotate_0
+#define SGL_ROTATE_DEFAULT SGL_ROTATE_0
 
 typedef enum
 {
-    sgl_circle_upper_right = 0x01,
-    sgl_circle_upper_left  = 0x02,
-    sgl_circle_lower_right = 0x04,
-    sgl_circle_lower_left  = 0x08,
-    sgl_circle_all         = 0xFF,
+    SGL_CIRCLE_UPPER_RIGHT = 0x01,
+    SGL_CIRCLE_UPPER_LEFT  = 0x02,
+    SGL_CIRCLE_LOWER_RIGHT = 0x04,
+    SGL_CIRCLE_LOWER_LEFT  = 0x08,
+    SGL_CIRCLE_ALL         = 0xFF,
 } sgl_circle_t;
 
 typedef struct
@@ -139,6 +139,7 @@ void sgl_clear(sgl_t* sgl, uint8_t data);
 void sgl_set_draw_piexl(sgl_t* sgl, void (* draw_piexl)(sgl_t*, int, int, uint32_t));
 void sgl_set_frame_start_cb(sgl_t* sgl, void (* frame_start_cb)(void));
 void sgl_set_frame_end_cb(sgl_t* sgl, void (* frame_end_cb)(void));
+void sgl_set_buffer(sgl_t* sgl, void* buffer);
 void sgl_set_font(sgl_t* sgl, font_t font);
 void sgl_set_screen_rotation(sgl_t* sgl, sgl_rotate_t rotate);
 void sgl_paint_start(sgl_t* sgl);
@@ -174,6 +175,5 @@ void sgl_draw_filled_ellipse_section(sgl_t* sgl, int xc, int yc, int rx, int ry,
 void sgl_show_mono_bitmap(sgl_t *sgl, int x, int y, int w, int h, const uint8_t *bitmap, sgl_dir_t dir, uint32_t color);
 void sgl_show_string(sgl_t *sgl, int x, int y, const char *str, int length, sgl_align_t align, sgl_dir_t dir, uint32_t color);
 int sgl_show_format_string(sgl_t *sgl, int x, int y, sgl_align_t align, sgl_dir_t dir, uint32_t color, const char *format, ...);
-
 
 #endif

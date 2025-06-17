@@ -97,10 +97,10 @@ void sgl_draw_round_rectangle(sgl_t* sgl, int x, int y, int w, int h, int r, int
         sgl_draw_hline(sgl, rect.left, rect.bottom + r, hl, color);
         sgl_draw_vline(sgl, x, rect.top, vl, color);
         sgl_draw_vline(sgl, rect.right + r, rect.top, vl, color);
-        sgl_draw_outlined_circle_section(sgl, rect.left, rect.top, r, sgl_circle_upper_left, color);
-        sgl_draw_outlined_circle_section(sgl, rect.right, rect.top, r, sgl_circle_upper_right, color);
-        sgl_draw_outlined_circle_section(sgl, rect.left, rect.bottom, r, sgl_circle_lower_left, color);
-        sgl_draw_outlined_circle_section(sgl, rect.right, rect.bottom, r, sgl_circle_lower_right, color);
+        sgl_draw_outlined_circle_section(sgl, rect.left, rect.top, r, SGL_CIRCLE_UPPER_LEFT, color);
+        sgl_draw_outlined_circle_section(sgl, rect.right, rect.top, r, SGL_CIRCLE_UPPER_RIGHT, color);
+        sgl_draw_outlined_circle_section(sgl, rect.left, rect.bottom, r, SGL_CIRCLE_LOWER_LEFT, color);
+        sgl_draw_outlined_circle_section(sgl, rect.right, rect.bottom, r, SGL_CIRCLE_LOWER_RIGHT, color);
     }
     else
     {
@@ -109,9 +109,9 @@ void sgl_draw_round_rectangle(sgl_t* sgl, int x, int y, int w, int h, int r, int
         sgl_draw_rectangle(sgl, rect.left, rect.bottom + 1, hl, r, 1, color);
         sgl_draw_rectangle(sgl, x, rect.top, r, vl, 1, color);
         sgl_draw_rectangle(sgl, rect.right + 1, rect.top, r, vl, 1, color);
-        sgl_draw_filled_circle_section(sgl, rect.left, rect.top, r, sgl_circle_upper_left, color);
-        sgl_draw_filled_circle_section(sgl, rect.right, rect.top, r, sgl_circle_upper_right, color);
-        sgl_draw_filled_circle_section(sgl, rect.left, rect.bottom, r, sgl_circle_lower_left, color);
-        sgl_draw_filled_circle_section(sgl, rect.right, rect.bottom, r, sgl_circle_lower_right, color);
+        sgl_draw_filled_circle_section(sgl, rect.left, rect.top, r, SGL_CIRCLE_UPPER_LEFT, color);
+        sgl_draw_filled_circle_section(sgl, rect.right, rect.top, r, SGL_CIRCLE_UPPER_RIGHT, color);
+        sgl_draw_filled_circle_section(sgl, rect.left, rect.bottom, r, SGL_CIRCLE_LOWER_LEFT, color);
+        sgl_draw_filled_circle_section(sgl, rect.right, rect.bottom, r, SGL_CIRCLE_LOWER_RIGHT, color);
     }
 }

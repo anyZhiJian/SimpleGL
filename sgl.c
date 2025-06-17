@@ -22,8 +22,8 @@ void sgl_init(sgl_t* sgl, void* buffer, uint32_t buffer_size, uint32_t page_num,
     sgl->visible = sgl->page;
     sgl->offset_x = 0;
     sgl->offset_y = 0;
-    sgl->font_info = font_get_font_info(font_Song_Typeface_6x12);
-    sgl->rotate = sgl_rotate_0;
+    sgl->font_info = font_get_font_info(font_Song_Typeface_8x16);
+    sgl->rotate = SGL_ROTATE_0;
     sgl->frame_start_cb = NULL;
     sgl->frame_end_cb = NULL;
     sgl->draw_piexl = sgl_draw_piexl_mono;
@@ -78,6 +78,11 @@ void sgl_display(sgl_t* sgl)
     sgl_paint_end(sgl);
 }
 
+void sgl_set_buffer(sgl_t* sgl, void* buffer)
+{
+    sgl->buffer = buffer;
+}
+
 void sgl_set_draw(sgl_t* sgl, void (* draw)(struct sgl_t*))
 {
     sgl->draw = draw;
@@ -113,7 +118,7 @@ void sgl_set_screen_rotation(sgl_t* sgl, sgl_rotate_t rotate)
     sgl->rotate = rotate;
     if(sgl->page_num < 2)
     {
-        if(rotate == sgl_rotate_0 || rotate == sgl_rotate_180)
+        if(rotate == SGL_ROTATE_0 || rotate == SGL_ROTATE_180)
         {
             sgl->page.right = sgl->max_x;
             sgl->page.bottom = sgl->max_y;

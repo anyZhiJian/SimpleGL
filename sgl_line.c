@@ -47,10 +47,10 @@ void sgl_draw_hline(sgl_t *sgl, int x, int y, int len, uint32_t color)
         y -= sgl->page_start;
     switch(sgl->rotate)
     {
-        case sgl_rotate_0:sgl_draw_original_hline(sgl, x, y, len, color);break;
-        case sgl_rotate_90:sgl_draw_original_vline(sgl, x, y, len, color);break;
-        case sgl_rotate_180:sgl_draw_original_hline(sgl, x, y, -len, color);break;
-        case sgl_rotate_270:sgl_draw_original_vline(sgl, x, y, -len, color);break;
+        case SGL_ROTATE_0:sgl_draw_original_hline(sgl, x, y, len, color);break;
+        case SGL_ROTATE_90:sgl_draw_original_vline(sgl, x, y, len, color);break;
+        case SGL_ROTATE_180:sgl_draw_original_hline(sgl, x, y, -len, color);break;
+        case SGL_ROTATE_270:sgl_draw_original_vline(sgl, x, y, -len, color);break;
     }
 }
 
@@ -66,10 +66,10 @@ void sgl_draw_vline(sgl_t *sgl, int x, int y, int len, uint32_t color)
         y -= sgl->page_start;
     switch(sgl->rotate)
     {
-        case sgl_rotate_0:sgl_draw_original_vline(sgl, x, y, len, color);break;
-        case sgl_rotate_90:sgl_draw_original_hline(sgl, x, y, -len, color);break;
-        case sgl_rotate_180:sgl_draw_original_vline(sgl, x, y, -len, color);break;
-        case sgl_rotate_270:sgl_draw_original_hline(sgl, x, y, len, color);break;
+        case SGL_ROTATE_0:sgl_draw_original_vline(sgl, x, y, len, color);break;
+        case SGL_ROTATE_90:sgl_draw_original_hline(sgl, x, y, -len, color);break;
+        case SGL_ROTATE_180:sgl_draw_original_vline(sgl, x, y, -len, color);break;
+        case SGL_ROTATE_270:sgl_draw_original_hline(sgl, x, y, len, color);break;
     }
 }
 
