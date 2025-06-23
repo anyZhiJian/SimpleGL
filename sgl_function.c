@@ -1,42 +1,38 @@
 #include "sgl.h"
 
-inline void sgl_swap_int(int *var0, int *var1)
-{
+void sgl_swap_int(int *var0, int *var1) {
     int temp = *var0;
     *var0 = *var1;
     *var1 = temp;
 }
 
-inline int sgl_min(int var0, int var1)
-{
+int sgl_min(int var0, int var1) {
     if (var0 > var1)
         return var1;
     else
         return var0;
 }
 
-inline int sgl_max(int var0, int var1)
-{
+int sgl_max(int var0, int var1) {
     if (var0 > var1)
         return var0;
     else
         return var1;
 }
 
-inline int sgl_check_rect(int left, int top, int right, int bottom, sgl_rect_t visible)
-{
-    if (left > visible.right || right < visible.left || top > visible.bottom || bottom < visible.top)
+int sgl_check_rect(int left, int top, int right, int bottom,
+                   sgl_rect_t visible) {
+    if (left > visible.right || right < visible.left || top > visible.bottom ||
+        bottom < visible.top)
         return -1;
     return 0;
 }
 
-inline int sgl_clip_hline(int *x, int *y, int *len, sgl_rect_t visible)
-{
+int sgl_clip_hline(int *x, int *y, int *len, sgl_rect_t visible) {
     int x_end;
     if (*y < visible.top || *y > visible.bottom)
         return -1;
-    if (*len > 0)
-    {
+    if (*len > 0) {
         if (*x > visible.right)
             return -1;
         x_end = *x + *len - 1;
@@ -47,9 +43,7 @@ inline int sgl_clip_hline(int *x, int *y, int *len, sgl_rect_t visible)
         if (x_end > visible.right)
             x_end = visible.right;
         *len = x_end - *x + 1;
-    }
-    else if (*len < 0)
-    {
+    } else if (*len < 0) {
         if (*x < visible.left)
             return -1;
         x_end = *x + *len + 1;
@@ -64,13 +58,11 @@ inline int sgl_clip_hline(int *x, int *y, int *len, sgl_rect_t visible)
     return 0;
 }
 
-inline int sgl_clip_vline(int *x, int *y, int *len, sgl_rect_t visible)
-{
+int sgl_clip_vline(int *x, int *y, int *len, sgl_rect_t visible) {
     int y_end;
     if (*x < visible.left || *x > visible.right)
         return -1;
-    if (*len > 0)
-    {
+    if (*len > 0) {
         if (*y > visible.bottom)
             return -1;
         y_end = *y + *len - 1;
@@ -81,9 +73,7 @@ inline int sgl_clip_vline(int *x, int *y, int *len, sgl_rect_t visible)
         if (y_end > visible.bottom)
             y_end = visible.bottom;
         *len = y_end - *y + 1;
-    }
-    else if (*len < 0)
-    {
+    } else if (*len < 0) {
         if (*y < visible.top)
             return -1;
         y_end = *y + *len + 1;
@@ -98,50 +88,38 @@ inline int sgl_clip_vline(int *x, int *y, int *len, sgl_rect_t visible)
     return 0;
 }
 
-inline void sgl_rotated2original(int *x, int *y, int max_x, int max_y, sgl_rotate_t rotate)
-{
+void sgl_rotated2original(int *x, int *y, int max_x, int max_y,
+                          sgl_rotate_t rotate) {
     int temp = *x;
-    if (rotate == SGL_ROTATE_90)
-    {
+    if (rotate == SGL_ROTATE_90) {
         *x = max_x - *y;
         *y = temp;
-    }
-    else if (rotate == SGL_ROTATE_270)
-    {
+    } else if (rotate == SGL_ROTATE_270) {
         *x = *y;
         *y = max_y - temp;
-    }
-    else if (rotate == SGL_ROTATE_180)
-    {
+    } else if (rotate == SGL_ROTATE_180) {
         *x = max_x - *x;
         *y = max_y - *y;
     }
 }
 
-inline void sgl_original2rotated(int *x, int *y, int max_x, int max_y, sgl_rotate_t rotate)
-{
+void sgl_original2rotated(int *x, int *y, int max_x, int max_y,
+                          sgl_rotate_t rotate) {
     int temp = *x;
-    if (rotate == SGL_ROTATE_90)
-    {
+    if (rotate == SGL_ROTATE_90) {
         *x = *y;
         *y = max_x - temp;
-    }
-    else if (rotate == SGL_ROTATE_270)
-    {
+    } else if (rotate == SGL_ROTATE_270) {
         *x = max_y - *y;
         *y = temp;
-    }
-    else if (rotate == SGL_ROTATE_180)
-    {
+    } else if (rotate == SGL_ROTATE_180) {
         *x = max_x - *x;
         *y = max_y - *y;
     }
 }
 
-inline void sgl_align(int *x, int *y, int w, int h, sgl_align_t align)
-{
-    switch (align)
-    {
+void sgl_align(int *x, int *y, int w, int h, sgl_align_t align) {
+    switch (align) {
     case SGL_ALIGN_UP_LEFT:
         break;
     case SGL_ALIGN_UP_RIGHT:

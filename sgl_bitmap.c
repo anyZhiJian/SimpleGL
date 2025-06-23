@@ -1,12 +1,12 @@
 #include "sgl.h"
 
-void sgl_show_mono_bitmap(sgl_t *sgl, int x, int y, int w, int h, const uint8_t *bitmap, sgl_dir_t dir, uint32_t color)
-{
+void sgl_show_mono_bitmap(sgl_t *sgl, int x, int y, int w, int h,
+                          const uint8_t *bitmap, sgl_dir_t dir,
+                          uint32_t color) {
     int i, j;
     int offset_x = x;
     int offset_y = y;
-    switch (dir)
-    {
+    switch (dir) {
     case SGL_DIR_UP:
         for (i = 0; i < w; ++i)
             for (j = 0; j < h; ++j)
