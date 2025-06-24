@@ -1,4 +1,4 @@
-#include "sgl.h"
+#include "sgl_function.h"
 
 void sgl_swap_int(int *var0, int *var1) {
     int temp = *var0;
@@ -25,66 +25,6 @@ int sgl_check_rect(int left, int top, int right, int bottom,
     if (left > visible.right || right < visible.left || top > visible.bottom ||
         bottom < visible.top)
         return -1;
-    return 0;
-}
-
-int sgl_clip_hline(int *x, int *y, int *len, sgl_rect_t visible) {
-    int x_end;
-    if (*y < visible.top || *y > visible.bottom)
-        return -1;
-    if (*len > 0) {
-        if (*x > visible.right)
-            return -1;
-        x_end = *x + *len - 1;
-        if (x_end < visible.left)
-            return -1;
-        if (*x < visible.left)
-            *x = visible.left;
-        if (x_end > visible.right)
-            x_end = visible.right;
-        *len = x_end - *x + 1;
-    } else if (*len < 0) {
-        if (*x < visible.left)
-            return -1;
-        x_end = *x + *len + 1;
-        if (x_end > visible.right)
-            return -1;
-        if (x_end < visible.left)
-            x_end = visible.left;
-        if (*x > visible.right)
-            *x = visible.right;
-        *len = x_end - *x - 1;
-    }
-    return 0;
-}
-
-int sgl_clip_vline(int *x, int *y, int *len, sgl_rect_t visible) {
-    int y_end;
-    if (*x < visible.left || *x > visible.right)
-        return -1;
-    if (*len > 0) {
-        if (*y > visible.bottom)
-            return -1;
-        y_end = *y + *len - 1;
-        if (y_end < visible.top)
-            return -1;
-        if (*y < visible.top)
-            *y = visible.top;
-        if (y_end > visible.bottom)
-            y_end = visible.bottom;
-        *len = y_end - *y + 1;
-    } else if (*len < 0) {
-        if (*y < visible.top)
-            return -1;
-        y_end = *y + *len + 1;
-        if (y_end > visible.bottom)
-            return -1;
-        if (y_end < visible.top)
-            y_end = visible.top;
-        if (*y > visible.bottom)
-            *y = visible.bottom;
-        *len = y_end - *y - 1;
-    }
     return 0;
 }
 

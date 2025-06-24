@@ -1,4 +1,7 @@
-#include "sgl.h"
+#include "sgl_rect.h"
+#include "sgl_circle.h"
+#include "sgl_function.h"
+#include "sgl_line.h"
 
 void sgl_draw_rectangle(sgl_t *sgl, int x, int y, int w, int h, int is_filled,
                         uint32_t color) {

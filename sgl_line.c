@@ -1,17 +1,9 @@
-#include "sgl.h"
+#include "sgl_line.h"
+#include "sgl_function.h"
+#include "sgl_point.h"
 
-void sgl_draw_point(sgl_t *sgl, int x, int y, uint32_t color) {
-    if (sgl_check_rect(x, y, x, y, sgl->visible))
-        return;
-    if (sgl->rotate)
-        sgl_rotated2original(&x, &y, sgl->max_x, sgl->max_y, sgl->rotate);
-    if (sgl->page_num > 1)
-        y -= sgl->page_start;
-    sgl->draw_piexl(sgl, x, y, color);
-}
-
-inline static void sgl_draw_original_hline(sgl_t *sgl, int x, int y, int len,
-                                           uint32_t color) {
+static void sgl_draw_original_hline(sgl_t *sgl, int x, int y, int len,
+                                    uint32_t color) {
     int i;
     int x1 = x + len;
     if (len > 0)
@@ -22,8 +14,8 @@ inline static void sgl_draw_original_hline(sgl_t *sgl, int x, int y, int len,
             sgl->draw_piexl(sgl, i, y, color);
 }
 
-inline static void sgl_draw_original_vline(sgl_t *sgl, int x, int y, int len,
-                                           uint32_t color) {
+static void sgl_draw_original_vline(sgl_t *sgl, int x, int y, int len,
+                                    uint32_t color) {
     int i;
     int y1 = y + len;
     if (len > 0)
@@ -32,6 +24,66 @@ inline static void sgl_draw_original_vline(sgl_t *sgl, int x, int y, int len,
     else if (len < 0)
         for (i = y; i > y1; --i)
             sgl->draw_piexl(sgl, x, i, color);
+}
+
+static int sgl_clip_hline(int *x, int *y, int *len, sgl_rect_t visible) {
+    int x_end;
+    if (*y < visible.top || *y > visible.bottom)
+        return -1;
+    if (*len > 0) {
+        if (*x > visible.right)
+            return -1;
+        x_end = *x + *len - 1;
+        if (x_end < visible.left)
+            return -1;
+        if (*x < visible.left)
+            *x = visible.left;
+        if (x_end > visible.right)
+            x_end = visible.right;
+        *len = x_end - *x + 1;
+    } else if (*len < 0) {
+        if (*x < visible.left)
+            return -1;
+        x_end = *x + *len + 1;
+        if (x_end > visible.right)
+            return -1;
+        if (x_end < visible.left)
+            x_end = visible.left;
+        if (*x > visible.right)
+            *x = visible.right;
+        *len = x_end - *x - 1;
+    }
+    return 0;
+}
+
+static int sgl_clip_vline(int *x, int *y, int *len, sgl_rect_t visible) {
+    int y_end;
+    if (*x < visible.left || *x > visible.right)
+        return -1;
+    if (*len > 0) {
+        if (*y > visible.bottom)
+            return -1;
+        y_end = *y + *len - 1;
+        if (y_end < visible.top)
+            return -1;
+        if (*y < visible.top)
+            *y = visible.top;
+        if (y_end > visible.bottom)
+            y_end = visible.bottom;
+        *len = y_end - *y + 1;
+    } else if (*len < 0) {
+        if (*y < visible.top)
+            return -1;
+        y_end = *y + *len + 1;
+        if (y_end > visible.bottom)
+            return -1;
+        if (y_end < visible.top)
+            y_end = visible.top;
+        if (*y > visible.bottom)
+            *y = visible.bottom;
+        *len = y_end - *y - 1;
+    }
+    return 0;
 }
 
 void sgl_draw_hline(sgl_t *sgl, int x, int y, int len, uint32_t color) {

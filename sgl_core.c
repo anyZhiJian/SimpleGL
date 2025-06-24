@@ -1,4 +1,7 @@
-#include "sgl.h"
+#include "sgl_core.h"
+#include "sgl_font.h"
+#include "sgl_function.h"
+#include "sgl_point.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -29,7 +32,7 @@ void sgl_init(sgl_t *sgl, void *buffer, uint32_t buffer_size, uint32_t page_num,
     sgl->draw_piexl = sgl_draw_piexl_mono;
 }
 
-void sgl_paint_start(sgl_t *sgl) {
+static void sgl_paint_start(sgl_t *sgl) {
     if (sgl->page_start == 0 && sgl->frame_start_cb)
         sgl->frame_start_cb();
     if (sgl->page_num > 1) {
@@ -51,7 +54,7 @@ void sgl_paint_start(sgl_t *sgl) {
     }
 }
 
-void sgl_paint_end(sgl_t *sgl) {
+static void sgl_paint_end(sgl_t *sgl) {
     sgl->page_start += sgl->page_width;
     if (sgl->page_start >= sgl->ver_res) {
         sgl->page_start = 0;
@@ -79,12 +82,12 @@ void sgl_set_draw(sgl_t *sgl, void (*draw)(struct sgl_t *)) {
     sgl->draw = draw;
 }
 
-void sgl_set_flush(sgl_t *sgl, void (*flush)(void *, uint32_t)) {
+void sgl_set_flush(sgl_t *sgl, void (*flush)(void *buffer, uint32_t size)) {
     sgl->flush = flush;
 }
 
-void sgl_set_draw_piexl(sgl_t *sgl,
-                        void (*draw_piexl)(sgl_t *, int, int, uint32_t)) {
+void sgl_set_draw_piexl(sgl_t *sgl, void (*draw_piexl)(sgl_t *sgl, int x, int y,
+                                                       uint32_t color)) {
     sgl->draw_piexl = draw_piexl;
 }
 
@@ -96,8 +99,8 @@ void sgl_set_frame_end_cb(sgl_t *sgl, void (*frame_end_cb)(void)) {
     sgl->frame_end_cb = frame_end_cb;
 }
 
-void sgl_set_font(sgl_t *sgl, font_t font) {
-    sgl->font_info = sgl_font_get_info(font);
+void sgl_set_font(sgl_t *sgl, int font) {
+    sgl->font_info = sgl_font_get_info((font_t)font);
 }
 
 void sgl_set_screen_rotation(sgl_t *sgl, sgl_rotate_t rotate) {
@@ -131,22 +134,3 @@ void sgl_set_visible_rect(sgl_t *sgl, int left, int top, int right,
 }
 
 void sgl_reset_visible_rect(sgl_t *sgl) { sgl->visible = sgl->page; }
-
-void sgl_draw_piexl_mono(sgl_t *sgl, int x, int y, uint32_t color) {
-    switch (color) {
-    case color_mono_light:
-        ((uint8_t *)sgl->buffer)[(y / 8) * sgl->hor_res + x] |= (1 << (y % 8));
-        break;
-    case color_mono_dark:
-        ((uint8_t *)sgl->buffer)[(y / 8) * sgl->hor_res + x] &= ~(1 << (y % 8));
-        break;
-    case color_mono_inverse:
-        ((uint8_t *)sgl->buffer)[(y / 8) * sgl->hor_res + x] ^= (1 << (y % 8));
-        break;
-    }
-}
-
-void sgl_draw_piexl_rgb565(sgl_t *sgl, int x, int y, uint32_t color) {
-    ((uint8_t *)sgl->buffer)[(x + sgl->hor_res * y) * 2] = color >> 8;
-    ((uint8_t *)sgl->buffer)[(x + sgl->hor_res * y) * 2 + 1] = color;
-}

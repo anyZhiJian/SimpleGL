@@ -1,5 +1,5 @@
+#include "sgl_font.h"
 #include "font_Song_Typeface.h"
-#include "sgl.h"
 // #include "font_xxx.h"(自定义字体添加字段)
 
 sgl_font_info_t sgl_font_get_info(font_t font) {

@@ -1,4 +1,7 @@
-#include "sgl.h"
+#include "sgl_circle.h"
+#include "sgl_function.h"
+#include "sgl_line.h"
+#include "sgl_point.h"
 
 /*
 +-----------> X

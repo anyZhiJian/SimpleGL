@@ -1,4 +1,5 @@
-#include "sgl.h"
+#include "sgl_bitmap.h"
+#include "sgl_point.h"
 
 void sgl_show_mono_bitmap(sgl_t *sgl, int x, int y, int w, int h,
                           const uint8_t *bitmap, sgl_dir_t dir,
