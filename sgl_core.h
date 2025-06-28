@@ -148,8 +148,26 @@ void sgl_set_frame_start_cb(sgl_t *sgl, void (*frame_start_cb)(void));
 void sgl_set_frame_end_cb(sgl_t *sgl, void (*frame_end_cb)(void));
 void sgl_set_font(sgl_t *sgl, int font);
 void sgl_set_screen_rotation(sgl_t *sgl, sgl_rotate_t rotate);
-void sgl_set_visible_rect(sgl_t *sgl, int left, int top, int right, int bottom);
-void sgl_reset_visible_rect(sgl_t *sgl);
+
+static inline void sgl_set_visible_rect(sgl_t *sgl, int left, int top,
+                                        int right, int bottom) {
+    if (left < sgl->page.left)
+        left = sgl->page.left;
+    if (top < sgl->page.top)
+        top = sgl->page.top;
+    if (right > sgl->page.right)
+        right = sgl->page.right;
+    if (bottom > sgl->page.bottom)
+        bottom = sgl->page.bottom;
+    sgl->visible.left = left;
+    sgl->visible.top = top;
+    sgl->visible.right = right;
+    sgl->visible.bottom = bottom;
+}
+
+static inline void sgl_reset_visible_rect(sgl_t *sgl) {
+    sgl->visible = sgl->page;
+}
 
 #ifdef __cplusplus
 }

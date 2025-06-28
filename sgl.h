@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-#include "sgl_arc.h"
 #include "sgl_bitmap.h"
 #include "sgl_circle.h"
 #include "sgl_core.h"
